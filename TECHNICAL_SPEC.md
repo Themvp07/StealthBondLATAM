@@ -188,9 +188,9 @@ sequenceDiagram
 > **Privacy Advantage**: The SENIAT and GLEIF API keys are injected directly into the Enclave from the **Vault DON**. Neither the Frontend nor the Node Operator ever sees these credentials.
 
 **Confidential Runtime Environment (CRE) Workflows:**
-- **Retail Identity (Natural Person)**: [`cre-project/workflows/stage1-identity/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage1-identity/index.ts) — Orchestrates the person-centric verification (SENIAT) and document integrity.
-- **Institutional Identity (Companies)**: [`cre-project/workflows/stage1-company/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage1-company/index.ts) — Integrates GLEIF and SENIAT Corporate for high-assurance KYB.
-- **AI Agent Delegation**: [`cre-project/workflows/stage1-agent/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage1-agent/index.ts) — Implements the "Tutor-Agent" verification logic for autonomous actors.
+- **Retail Identity (Natural Person)**: [`cre-project/workflows/stage1-identity/index.ts`](cre-project/workflows/stage1-identity/index.ts) — Orchestrates the person-centric verification (SENIAT) and document integrity.
+- **Institutional Identity (Companies)**: [`cre-project/workflows/stage1-company/index.ts`](cre-project/workflows/stage1-company) — Integrates GLEIF and SENIAT Corporate for high-assurance KYB.
+- **AI Agent Delegation**: [`cre-project/workflows/stage1-agent/index.ts`](cre-project/workflows/stage1-identity/index.ts) — Implements the "Tutor-Agent" verification logic for autonomous actors.
 
 
 
