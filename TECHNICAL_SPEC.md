@@ -268,7 +268,7 @@ sequenceDiagram
 > **Regulatory Compliance (ERC-3643)**: The tokens are deployed as clones of the **StealthBondERC3643** implementation, which inherits from the official ACE standards. This ensures that every transfer is automatically checked against the `IdentityRegistry` established in Stage 1.
 
 **Confidential Runtime Environment (CRE) Workflow:**
-- **Bond Issuance Orchestrator**: [`cre-project/workflows/stage2-issuance/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage2-issuance/index.ts) — Performs real-time bank collateral check (PoR) and generates the RWA tokens via on-chain factory.
+- **Bond Issuance Orchestrator**: [`cre-project/workflows/stage2-issuance/index.ts`](cre-project/workflows/stage2-issuance/index.ts) — Performs real-time bank collateral check (PoR) and generates the RWA tokens via on-chain factory.
 
 
 ### Stage 3: Real-Time PoR Automation & Retail Investment
@@ -338,7 +338,7 @@ sequenceDiagram
 > **Technical Milestone**: Flow B utilizes the `forcedTransfer` agent privilege of the **ERC-3643** standard. This allows the TEE (acting as an authorized agent) to settle retail trades between the issuer's vault and the investor atomically once the **ACE Policy Engine** has confirmed the investor's **CCID** status.
 
 **Confidential Runtime Environment (CRE) Workflow:**
-- **PoR Monitor & Circuit Breaker**: [`cre-project/workflows/stage3-monitor/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage3-monitor/index.ts) — Implements the 10-minute heartbeat for bank reserves and the autonomous `updateReserveRatio` logic via Gemini AI.
+- **PoR Monitor & Circuit Breaker**: [`cre-project/workflows/stage3-monitor/index.ts`](cre-project/workflows/stage3-monitor/index.ts) — Implements click trigger heartbeat for bank reserves and the autonomous `updateReserveRatio` logic via Gemini AI.
 
 
 ### Stage 4: Secondary Market & Private Transactions
@@ -427,8 +427,8 @@ sequenceDiagram
 > **Multi-Role Settlement**: The diagram explicitly shows the cryptographic refund mechanism for losers and the payment for the seller. All interim movements are managed by the TEE's private ledger, and on-chain movements occur only during **Withdrawal**, ensuring no bid amounts are leaked in the public mempool.
 
 **Confidential Runtime Environment (CRE) Workflows:**
-- **Private Auction Logic**: [`cre-project/workflows/stage4-market/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage4-market/index.ts) — Manages the private ledger, determines auction winners, and signs withdrawal tickets.
-- **AI Consultant (x402)**: [`cre-project/workflows/stage4-consultant/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage4-consultant/index.ts) — AI AlphaScore engine gated by x402 payment headers.
+- **Private Auction Logic**: [`cre-project/workflows/stage4-market/index.ts`](cre-project/workflows/stage4-market/index.ts) — Manages the private ledger, determines auction winners, and signs withdrawal tickets.
+- **AI Consultant (x402)**: [`cre-project/workflows/stage4-consultant/index.ts`](cre-project/workflows/stage4-consultant/index.ts) — AI AlphaScore engine gated by x402 payment headers.
     - **On-chain Evidence (Base Sepolia)**: [USDC x402 Agentic Settlement](https://sepolia.basescan.org/token/0x036cbd53842c5426634e7929541ec2318f3dcf7e?a=0x335484D0F28E232AFe5892AA621FA0AaC5460c08)
 
 
@@ -490,7 +490,7 @@ sequenceDiagram
 > **Interoperable Compliance**: By executing the AML logic within the TEE, the project utilizes **Chainlink CCIP** to ensure that once a wallet is flagged or frozen on the primary chain, its "Compliance Status" is propagated to all secondary chains, preventing regulatory evasions across the multichain ecosystem.
 
 **Confidential Runtime Environment (CRE) Workflow:**
-- **Multichain AML & Enforcement**: [`cre-project/workflows/stage5-aml/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage5-aml/index.ts) — Integrates CheckCryptoAddress API and coordinates cross-chain freezing via `ccipSend`.
+- **Multichain AML & Enforcement**: [`cre-project/workflows/stage5-aml/index.ts`](cre-project/workflows/stage5-aml/index.ts) — Integrates CheckCryptoAddress API and coordinates cross-chain freezing via `ccipSend`.
     - **On-chain Evidence (Base Sepolia)**: [Multichain Regulatory Activity](https://sepolia.basescan.org/token/0x036cbd53842c5426634e7929541ec2318f3dcf7e?a=0x335484D0F28E232AFe5892AA621FA0AaC5460c08)
 
 
@@ -545,7 +545,7 @@ sequenceDiagram
 > **Proof of Yield (PoY)**: Unlike traditional spreadsheets, the TEE calculates yield by aggregating multiple source-of-truth points (on-chain transfers + private bank reserves), ensuring the reported ROI is backed by math and not just self-reporting.
 
 **Confidential Runtime Environment (CRE) Workflow:**
-- **Regulatory Reporting & Decryption**: [`cre-project/workflows/stage6-reports/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage6-reports/index.ts) — Handles AI report synthesis (Gemini) and the asymmetric decryption gateway for SUNAVAL.
+- **Regulatory Reporting & Decryption**: [`cre-project/workflows/stage6-reports/index.ts`](cre-project/workflows/stage6-reports/index.ts) — Handles AI report synthesis (Gemini) and the asymmetric decryption gateway for SUNAVAL.
 
 
 ## 1. Technical Pillars
@@ -624,56 +624,56 @@ Stage 5 implements a high-stakes compliance filter:
 ## 6. Smart Contract Inventory (Architecture Reference)
 
 ### Identity & Compliance
-- **`AgentRegistry.sol`**: [`blockchain/src/stage1-identity/AgentRegistry.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage1-identity/AgentRegistry.sol)
+- **`AgentRegistry.sol`**: [`blockchain/src/stage1-identity/AgentRegistry.sol`](blockchain/src/stage1-identity/AgentRegistry.sol)
     - Maps public wallets to their corresponding **Cross-Chain Identity Digest (CCID)** and trust levels. It acts as the primary on-chain source of truth for the **ACE Identity Registry**, ensuring that all systemic actors (Retail, Corporate, AI) are cryptographically verified before interaction.
-- **`CREComplianceIssuer.sol`**: [`blockchain/src/stage1-identity/CREComplianceIssuer.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage1-identity/CREComplianceIssuer.sol)
+- **`CREComplianceIssuer.sol`**: [`blockchain/src/stage1-identity/CREComplianceIssuer.sol`](blockchain/src/stage1-identity/CREComplianceIssuer.sol)
     - An authorized reporting gateway that processes **Chainlink CRE** attestations into on-chain credentials. It utilizes namespaced storage for upgradeability and is protected by the **ACE PolicyEngine**, allowing only verified DON workflows to register or renew identities.
 
 ### RWA Core & Issuance
-- **`StealthBondERC3643.sol`**: [`blockchain/src/stage2-issuance/StealthBondERC3643.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage2-issuance/StealthBondERC3643.sol)
+- **`StealthBondERC3643.sol`**: [`blockchain/src/stage2-issuance/StealthBondERC3643.sol`](blockchain/src/stage2-issuance/StealthBondERC3643.sol)
     - The implementation of the **ERC-3643 (T-REX)** standard for tokenized bonds. It embeds compliance directly into the transfer logic via the `IdentityRegistry` and features a programmable circuit breaker (`updateReserveRatio`) controlled by the **Chainlink DON**.
-- **`StealthBondFactory.sol`**: [`blockchain/src/stage2-issuance/StealthBondFactory.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage2-issuance/StealthBondFactory.sol)
+- **`StealthBondFactory.sol`**: [`blockchain/src/stage2-issuance/StealthBondFactory.sol`](blockchain/src/stage2-issuance/StealthBondFactory.sol)
     - Orchestrates the creation of new RWA tokens using the **ERC-1167 Minimal Proxy** pattern (Clones). It manages the bond lifecycle, initialization of compliance rules, and triggers the initial **CCIP** cross-chain synchronization for multichain liquidity.
-- **`BondVault.sol`**: [`blockchain/src/stage2-issuance/BondVault.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage2-issuance/BondVault.sol)
+- **`BondVault.sol`**: [`blockchain/src/stage2-issuance/BondVault.sol`](blockchain/src/stage2-issuance/BondVault.sol)
     - A specialized data vault that stores the nominal and collateral metadata for each issued bond. It is strictly updated by the **CRE Forwarder** post-validation, providing a transparent link between on-chain assets and the TEE-verified bank reserves.
-- **`StealthBondToken.sol`**: [`blockchain/src/stage2-issuance/StealthBondToken.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage2-issuance/StealthBondToken.sol)
+- **`StealthBondToken.sol`**: [`blockchain/src/stage2-issuance/StealthBondToken.sol`](blockchain/src/stage2-issuance/StealthBondToken.sol)
     - A legacy/reference ERC-20 implementation used for early-stage testing and architectural prototyping. While eventually superseded by the ERC-3643 compliant version, it serves as the baseline for simple asset movements and internal fractionalization tests.
 
 ### Cross-Chain / CCIP
-- **`StealthBondReceiver.sol`**: [`blockchain/src/stage2-issuance/StealthBondReceiver.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage2-issuance/StealthBondReceiver.sol)
+- **`StealthBondReceiver.sol`**: [`blockchain/src/stage2-issuance/StealthBondReceiver.sol`](blockchain/src/stage2-issuance/StealthBondReceiver.sol)
     - A **Chainlink CCIP Receiver** that handles incoming cross-chain messages from the primary factory. It decodes mandates for bond "mirroring" on destination chains, ensuring that RWA availability is synchronized across the entire multichain ecosystem.
-- **`KeystoneForwarder.sol`**: [`blockchain/src/common/KeystoneForwarder.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/common/KeystoneForwarder.sol)
+- **`KeystoneForwarder.sol`**: [`blockchain/src/common/KeystoneForwarder.sol`](blockchain/src/common/KeystoneForwarder.sol)
     - A specialized middleware designed to forward cryptographic reports from the **Chainlink DON** to their respective target registries. It acts as a security buffer, verifying the `donSigner` and ensuring payloads reach the correct compliance destination.
 
 ### Market & Escrow
-- **`StealthVaultEscrow.sol`**: [`blockchain/src/stage4-market/StealthVaultEscrow.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage4-market/StealthVaultEscrow.sol)
+- **`StealthVaultEscrow.sol`**: [`blockchain/src/stage4-market/StealthVaultEscrow.sol`](blockchain/src/stage4-market/StealthVaultEscrow.sol)
     - A non-custodial vault that manages the "Shielding" of USDC and RWA tokens during private auctions. It utilizes a **TEE-signed Ticket** redemption system, ensuring that assets are only released upon cryptographic proof of a successful auction resolution.
-- **`RegulatoryReportLedger.sol`**: [`blockchain/src/stage6-reports/RegulatoryReportLedger.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage6-reports/RegulatoryReportLedger.sol)
+- **`RegulatoryReportLedger.sol`**: [`blockchain/src/stage6-reports/RegulatoryReportLedger.sol`](blockchain/src/stage6-reports/RegulatoryReportLedger.sol)
     - Serves as the immutable anchor for all regulatory filings. It stores the hashes (Digests) of the **ACE Secure Envelopes** (encrypted reports), providing a transparent audit trail for **SUNAVAL** while keeping the sensitive data private and off-chain.
 
 ### Common / Mock Assets (Testing)
-- **`MockUSDC.sol`**: [`blockchain/src/common/MockUSDC.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/common/MockUSDC.sol)
+- **`MockUSDC.sol`**: [`blockchain/src/common/MockUSDC.sol`](blockchain/src/common/MockUSDC.sol)
     - A standard ERC-20 implementation of USDC with 6 decimals used for local environment simulation. It allows the development team to test shielding, bidding, and settlement flows without requiring mainnet liquidity.
-- **`MockStablecoin.sol`**: [`blockchain/src/common/MockStablecoin.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/common/MockStablecoin.sol)
+- **`MockStablecoin.sol`**: [`blockchain/src/common/MockStablecoin.sol`](blockchain/src/common/MockStablecoin.sol)
     - An auxiliary stablecoin used for secondary currency pair testing (e.g., EURC or VES-Pegged). It mirrors the behavior of production-grade stablecoins to verify the flexibility of the **CRE Price Feed** integration and multi-asset retail purchases.
-- **`MockForwarder.sol`**: [`blockchain/src/common/MockForwarder.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/common/MockForwarder.sol)
+- **`MockForwarder.sol`**: [`blockchain/src/common/MockForwarder.sol`](blockchain/src/common/MockForwarder.sol)
     - A simplified version of the Keystone Forwarder used for testing the `onReport` reception logic. It bypasses the complex DON signature verification to facilitate unit testing of Compliance Issuers and Agent Registries in isolated environments.
 
 ---
 ## 7. Integration with Chainlink Services
 
 ### Chainlink CCIP (Cross-Chain Interoperability Protocol)
-- **Automatic Sinking (Bond Mirroring)**: [`blockchain/src/stage2-issuance/StealthBondFactory.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage2-issuance/StealthBondFactory.sol#L176)
+- **Automatic Sinking (Bond Mirroring)**: [`blockchain/src/stage2-issuance/StealthBondFactory.sol`](blockchain/src/stage2-issuance/StealthBondFactory.sol)
     - The Factory utilizes `IRouterClient.ccipSend` within the internal `_ccipSend` function to transmit bond metadata (ID, address, and vault hash) from the primary issuance chain to desired destination networks like Polygon or Arbitrum.
-- **Inter-network Reception**: [`blockchain/src/stage2-issuance/StealthBondReceiver.sol`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/blockchain/src/stage2-issuance/StealthBondReceiver.sol#L29)
+- **Inter-network Reception**: [`blockchain/src/stage2-issuance/StealthBondReceiver.sol`](blockchain/src/stage2-issuance/StealthBondReceiver.sol)
     - Implements the `CCIPReceiver` interface on secondary blockchains. It captures mandates for bond "mirroring," enabling the local issuance of synthetic RWA tokens that remain cryptographically linked to the primary vault.
 - **Multichain Compliance Propagation**: Reflected in **Stage 5 Architecture**.
     - CCIP is used to coordinate "Freeze" signals across all connected chains, ensuring that a regulatory violation detected on one network is instantly enforced across the entire multichain ecosystem.
 
 ### Chainlink Price Feeds (Data Feeds)
-- **Real-Time Reserve Monitoring (PoR)**: [`cre-project/workflows/stage3-monitor/index.ts`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/cre-project/workflows/stage3-monitor/index.ts#L99)
+- **Real-Time Reserve Monitoring (PoR)**: [`cre-project/workflows/stage3-monitor/index.ts`](cre-project/workflows/stage3-monitor/index.ts)
     - The TEE workflow queries the `USDC-USD` and `EURC-USD` Price Feeds (or local mock fallbacks) to calculate the market value of multi-currency collateral reserves. This data is fed into Gemini AI to determine if the bond coverage ratio is healthy or if an autonomous pause is required.
-- **SVR-Enabled Retail Settlement**: [`core-engine/routes/trading.js`](file:///c:/Users/simon/Documents/CRE%20Hackthon%20-%20Full%20OK/codigo/core-engine/routes/trading.js#L44)
+- **SVR-Enabled Retail Settlement**: [`core-engine/routes/trading.js`](core-engine/routes/trading.js)
     - Tijdens retail fractional purchases, the backend references Chainlink Price Feeds for `USDC`, `EURC`, and `VES` (peg-rate) to ensure fair exchange rates (SVR-Ready). This protects small investors from MEV and price manipulation during the atomic swap from their preferred currency to RWA tokens.
 
 ---
