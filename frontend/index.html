@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StealthBond LATAM</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1>StealthBond LATAM</h1>
+      <div class="wallet-controls">
+        <div id="walletAddress" class="wallet-badge">Disconnected</div>
+        <button id="connectWalletBtn" class="primary-btn">Connect MetaMask</button>
+      </div>
+    </header>
+
+    <nav>
+      <button data-stage="1" class="stage-btn active">1. Onboarding KYC</button>
+      <button data-stage="2" class="stage-btn">2. Bond Issuance</button>
+      <button data-stage="3" class="stage-btn">3. AI Monitoring</button>
+      <button data-stage="4" class="stage-btn">4. Secondary Market</button>
+      <button data-stage="5" class="stage-btn">5. Anti-Scam Filter</button>
+      <button data-stage="6" class="stage-btn">6. Regulatory Reports</button>
+    </nav>
+
+    <div id="content">
+      <main>
+        <!-- Stage 1: Type Selection -->
+        <section id="stage-1" class="stage-content">
+          <h2>Onboarding KYC</h2>
+          <p>Select the type of entity to register:</p>
+          <div class="entity-buttons">
+            <button data-entity="person">Person</button>
+            <button data-entity="company">Company</button>
+            <button data-entity="agent">AI Agent</button>
+          </div>
+
+          <!-- Person/Company Form -->
+          <div id="kycFormContainer" style="display:none; margin-top:1rem;">
+            <button id="kycBackBtn" class="back-btn">← Back</button>
+            <h3 id="kycTitle"></h3>
+            <span id="entityBadge" class="entity-badge"></span>
+            <form id="kycForm">
+              <input type="hidden" id="entityType" name="type" />
+              <label id="kycNameLabel">Name: <input type="text" id="kycName" name="name" required /></label>
+              <label id="kycEmailLabel" style="display:none;">LEI Code (GLEIF): <input type="text" id="kycEmail"
+                  name="lei" placeholder="e.g.: 254900UCQZOWN6V1G486" maxlength="20" /></label>
+              <label id="kycRifLabel">RIF (V- / J-): <input type="text" id="kycRif" name="rif"
+                  placeholder="e.g.: J-123456789" required /></label>
+              <label id="kycOcrLabel" style="color: #60a5fa; font-size: 0.85rem;">[TEMPORAL] OCR Simulation (PDF
+                Content):
+                <input type="text" id="kycOcrContent" name="ocr" placeholder="Write only numbers to pass..." />
+              </label>
+              <label id="kycDocLabel">Upload RIF (PDF): <input type="file" id="kycDoc" accept=".pdf,.txt"
+                  required /></label>
+              <button type="submit">Submit for Registration</button>
+            </form>
+            <div id="kycStatus"></div>
+
+            <!-- Progress Steps Viewer -->
+            <div id="kycSteps" class="steps-container" style="display:none;">
+              <h4>ACE Identity Cycle (Identity Manager)</h4>
+              <ul id="stepList">
+                <li id="step-1">1. Submission Encryption (WebCrypto)</li>
+                <li id="step-2">2. Intent Signature (Keystone Forwarder)</li>
+                <li id="step-3">3. TEE Cryptographic Authentication (Auth)</li>
+                <li id="step-4">4. Identity Trigger Activation</li>
+                <li id="step-5">5. SENIAT &amp; GLEIF Validation (Vault-Isolated)</li>
+                <li id="step-6">6. AI Risk Analysis (Gemini Enclave)</li>
+                <li id="step-7">7. Compliance Screening (AML)</li>
+                <li id="step-8">8. Citizen ID Issuance (CCID)</li>
+                <li id="step-9">9. On-chain Anchoring (Signed Report)</li>
+                <li id="step-10">10. Registration Successfully Completed</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- AI Agent Form -->
+          <div id="agentFormContainer" style="display:none; margin-top:1rem;">
+            <button id="agentBackBtn" class="back-btn">← Back</button>
+            <h3>AI Agent Registration</h3>
+            <span class="entity-badge agent">AI AGENT</span>
+            <form id="agentForm">
+              <label>Agent Name: <input type="text" id="agentName" placeholder="e.g.: StealthBot-Alpha"
+                  required /></label>
+              <label>Tutor Wallet (connected): <input type="text" id="agentTutorWallet" placeholder="0x..." required
+                  readonly style="background: rgba(15, 23, 42, 0.5); color: #94a3b8; cursor: not-allowed;"
+                  title="This is the wallet that will sign and authorize the creation of the agent." /></label>
+              <label>Agent Wallet: <input type="text" id="agentWallet" placeholder="0x..." required /></label>
+              <button type="submit">Register Agent</button>
+            </form>
+            <div id="agentStatus"></div>
+
+            <!-- Agent Steps Viewer -->
+            <div id="agentSteps" class="steps-container" style="display:none;">
+              <h4>Agent Registration Progress (CRE)</h4>
+              <ul id="agentStepList">
+                <li id="agent-step-1">1. Tutorship Delegation Signature (Keystone Intent)</li>
+                <li id="agent-step-2">2. Verifying Tutor's on-chain credential (VC)</li>
+                <li id="agent-step-3">3. Compliance Screening (AML)</li>
+                <li id="agent-step-4">4. Derived Credential Issuance (ACE)</li>
+                <li id="agent-step-5">5. AgentRegistry Registration (evmWrite)</li>
+                <li id="agent-step-6">6. Registration Completed</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Stage 2 -->
+        <section id="stage-2" class="stage-content" style="display:none;">
+          <h2>Secure Mint: Bond Issuance (ACE + CCIP)</h2>
+          <p id="issuerNotice" style="color: #ffcc00; display: none; font-weight: bold; margin-bottom: 1rem;">
+            ⚠️ Only wallets registered as a COMPANY can issue bonds.
+          </p>
+          <form id="issueForm">
+            <label>Bond name: <input type="text" id="bondName" placeholder="e.g.: S4B Corporate Bond"
+                required /></label>
+            <label>Nominal Amount (Tokens):
+              <input type="number" id="bondAmount" min="1" placeholder="e.g.: 50000" required />
+              <small style="color: #94a3b8; margin-top: 4px;">1 USD = 1 StealthBondToken. These tokens will be issued to
+                your
+                wallet.</small>
+            </label>
+            <label>Collateral ID (Bank):
+              <input type="text" id="collateralId" placeholder="e.g.: COL-99" required />
+              <small style="color: #aaa; margin-top: 5px; display: block;">Simulates a real asset in bank
+                custody.</small>
+            </label>
+            <label>Destination Network:
+              <select id="bondChain">
+                <option value="Sepolia">Ethereum Sepolia</option>
+                <option value="Arbitrum">Arbitrum Sepolia</option>
+              </select>
+            </label>
+            <button type="submit" id="issueBtn">Issue Bond</button>
+          </form>
+          <div id="issueStatus" style="margin-top: 1rem;"></div>
+
+          <!-- Issuance Steps Viewer -->
+          <div id="issueSteps" class="steps-container" style="display:none; margin-top: 1.5rem;">
+            <h4>Secure Mint Workflow (Chainlink ACE)</h4>
+            <ul id="issueStepList">
+              <li id="issue-step-1">1. Cryptographic Intent Signature (Keystone)</li>
+              <li id="issue-step-2">2. Private Collateral &amp; PoR Validation (TEE Custodian)</li>
+              <li id="issue-step-3">3. Compliance Analysis &amp; Hash Encryption (Gemini AI)</li>
+              <li id="issue-step-4">4. Deploying RWA ERC-3643 Clone (EVM Factory)</li>
+              <li id="issue-step-5">5. Multichain Messaging Preparation (CCIP Router)</li>
+              <li id="issue-step-6">6. RWA Bond Successfully Created</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Stage 3: AI Monitoring & Fractionalization -->
+        <section id="stage-3" class="stage-content" style="display:none;">
+          <div class="stage-header">
+            <h2>Policy Manager & Monitoring</h2>
+            <div id="aiCodeHash" class="code-hash-badge" title="Image Hash of the immutable code in TEE">ACE Code Hash:
+              0x...</div>
+          </div>
+
+          <!-- Health Dashboard -->
+          <div class="monitor-dashboard">
+            <div class="metric-card price-ticker">
+              <span id="tickerLabel" class="label">Price Feed (USDC/USD)</span>
+              <span id="livePrice" class="value">$ ---</span>
+              <span id="svrBadge" class="sub-label">SVR-Enabled Feed</span>
+            </div>
+            <div class="metric-card health-gauge">
+              <span class="label">Reserve Ratio (Monitoring)</span>
+              <span id="healthRatio" class="value">0%</span>
+              <div id="healthIndicator" class="indicator-bar"></div>
+            </div>
+            <div class="metric-card risk-badge">
+              <span class="label">Bond Status</span>
+              <span id="bondStatusBadge" class="status-badge active">ACTIVE</span>
+              <span id="lastCheckTime" class="sub-label">Awaiting monitoring...</span>
+            </div>
+          </div>
+
+          <!-- AI Thinking Console -->
+          <div class="ai-console">
+            <div class="ai-console-header">
+              <span class="ai-brain-icon">🤖</span>
+              <span>Gemini Risk Engine - TEE Insights</span>
+            </div>
+            <div id="aiThinkingStream" class="ai-thinking-log">
+              Awaiting ACE trigger (Monitoring Schedule)...
+            </div>
+          </div>
+
+          <div class="two-col" style="margin-top: 1.5rem;">
+            <!-- Monitoring Control -->
+            <div class="control-card">
+              <h3>Oracle Control</h3>
+              <p>Simulates the automatic CRE trigger to verify reserves against nominal.</p>
+              <button id="forceMonitorBtn" class="primary-btn">Force AI Verification Now</button>
+
+              <div class="debug-controls" style="margin-top: 1rem; border-top: 1px solid #334155; padding-top: 1rem;">
+                <h4>Crisis Simulation (Debug)</h4>
+                <button id="simulateDeficitBtn" class="danger-btn small">Lower Reserves to 50%</button>
+                <button id="restoreReservesBtn" class="success-btn small">Restore Reserves 100%</button>
+              </div>
+            </div>
+
+            <!-- Fractional Investment -->
+            <div class="investment-card">
+              <h3>Retail Investment</h3>
+              <p>Buy fractions of institutional bonds protected by AI.</p>
+              <form id="fractionalBuyForm">
+                <label>Select Bond:
+                  <select id="buyBondSelect"></select>
+                </label>
+                <div class="form-group" style="display: flex; gap: 0.5rem; justify-content: space-between;">
+                  <div style="flex: 1;">
+                    <label>Currency:
+                      <select id="buyCurrencySelect" class="form-control" style="width: 100%;">
+                        <option value="USDC-USD">USDC (SVR-Enabled)</option>
+                        <option value="VES-USD">Bolívares (VES)</option>
+                        <option value="EURC-USD">Euro (EURC)</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div style="flex: 1;">
+                    <label>Amount:
+                      <input type="number" id="buyAmount" min="1" step="any" placeholder="e.g.: 5000"
+                        class="form-control" required style="width: 100%;" />
+                    </label>
+                  </div>
+                </div>
+                <div class="conversion-preview"
+                  style="font-size: 0.85em; color: #94a3b8; margin-bottom: 0.5rem; background: rgba(15, 23, 42, 0.4); border: 1px solid #1e293b; padding: 0.5rem;">
+                  Oracle (<span id="oracleFeedName" style="color:#22d3ee">USDC/USD</span>): <span
+                    id="paymentUsdValue">$0.00</span> USD
+                </div>
+                <div id="tokenPreview" class="conversion-preview"
+                  style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.5rem; border-radius: 4px;">
+                  Your tokens: 0.00 SBRWA
+                </div>
+                <button type="submit" id="buyBtn" class="buy-btn" style="margin-top: 1rem;">Invest with Keystone
+                  Intent</button>
+              </form>
+            </div>
+          </div>
+
+          <div id="stage3Status" style="margin-top: 1rem;"></div>
+        </section>
+
+        <!-- Stage 4: Private Transaction Market -->
+        <section id="stage-4" class="stage-content" style="display:none;">
+          <div class="private-marketplace-hero">
+            <div class="hero-text">
+              <h3>Private Institutional Marketplace</h3>
+              <p style="color: #94a3b8; margin: 5px 0 0 0;">Orchestrated by Chainlink CRE (TEE) & ACE</p>
+            </div>
+          </div>
+
+          <div class="private-vault-container">
+            <!-- Left Column: Vault Operations -->
+            <div class="private-card">
+              <span class="private-balance-badge">🔒 OFF-CHAIN PRIVACY LAYER</span>
+              <h3>Private Vault (Shielding)</h3>
+              <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.5rem;">
+                Deposit assets in the Vault to participate in private auctions without revealing your on-chain balance.
+              </p>
+
+              <div class="shield-zone" id="shieldZone">
+                <span class="shield-icon">🛡️</span>
+                <p style="font-weight: bold; margin: 0;">Press to Shield Assets</p>
+                <small style="color: #64748b;">Move tokens to the private transaction environment</small>
+              </div>
+
+              <div id="shieldForm"
+                style="display: none; margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                <label>Asset:
+                  <select id="shieldTokenSelect" class="form-control">
+                    <option value="USDC">USDC (Collateral)</option>
+                    <option value="SBRWA">StealthBond RWA</option>
+                  </select>
+                </label>
+                <label>Amount: <input type="number" id="shieldAmount" placeholder="e.g.: 1000" /></label>
+                <button id="confirmShieldBtn" class="primary-btn" style="margin-top: 0.5rem;">Confirm Deposit
+                  (Shield)</button>
+                <button id="cancelShieldBtn" class="secondary-btn small"
+                  style="margin-top: 0.5rem; width: 100%;">Cancel</button>
+              </div>
+            </div>
+
+            <!-- Right Column: Private Balances & Tickets -->
+            <div class="private-card">
+              <span class="private-balance-badge"
+                style="background: rgba(34, 211, 238, 0.1); color: #22d3ee; border-color: #22d3ee;">🔐 TEE LEDGER
+                BALANCE</span>
+              <h3>Shielded Balances</h3>
+              <div id="privateBalances" style="margin-top: 1rem;">
+                <div
+                  style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.5rem 0;">
+                  <span style="color: #94a3b8;">💰 USDC in Vault:</span>
+                  <span id="privateUsdcBal" style="font-weight: bold; color: #22d3ee;">$ 0.00</span>
+                </div>
+                <div
+                  style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.5rem 0;">
+                  <span style="color: #94a3b8;">✅ Available for Bids:</span>
+                  <span id="availableUsdcBal" style="font-weight: bold; color: #10b981;">$ 0.00</span>
+                </div>
+              </div>
+              <div style="margin-top: 0.75rem;">
+                <h4 style="margin: 0 0 0.5rem 0; font-size: 0.8rem; color: #a855f7;">🔒 My Active Bids</h4>
+                <div id="activeBidsList" style="font-size: 0.75rem; color: #94a3b8;">
+                  <p style="font-style: italic; margin: 0;">No active bids.</p>
+                </div>
+              </div>
+
+              <div class="unshield-container">
+                <h4 style="margin-top: 0; font-size: 0.9rem; color: #f8fafc;">Withdrawal Tickets (Unshield)</h4>
+                <div id="ticketsList" class="ticket-grid">
+                  <p style="font-size: 0.8rem; color: #64748b; font-style: italic;">No pending TEE tickets.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="control-card">
+              <h3>Publish Private Auction</h3>
+              <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 1rem;">
+                Assets will be locked in the Vault. The final price and winner will be managed in the TEE.
+              </p>
+              <form id="createAuctionForm">
+                <label>Select Bond:
+                  <select id="auctionBondSelect" required>
+                    <option value="">Loading bonds...</option>
+                  </select>
+                </label>
+                <label>Amount of tokens: <input type="number" id="auctionAmount" min="1" required /></label>
+                <label>Reference Price (USDC): <input type="number" id="auctionMinBid" min="0" required /></label>
+                <button type="submit" class="primary-btn">Start Auction in Enclave</button>
+              </form>
+            </div>
+            <div>
+              <h3>Participate in the Market</h3>
+              <div id="aiConsultantBox" class="ai-console" style="display:none; margin-bottom: 1rem;">
+                <!-- Dynamic UI for x402 injected by app.js -->
+              </div>
+
+              <!-- Bidding Box Inline (Hidden by default) -->
+              <div id="bidInputBox" class="private-card"
+                style="display:none; margin-bottom: 1.5rem; border: 1px solid #a855f7;">
+                <h4 id="bidTitle" style="color: #a855f7;">Bid in Sealed Envelope (TEE)</h4>
+                <p style="font-size: 0.8rem; color: #94a3b8;">Your bid will only be visible to the Chainlink CRE.</p>
+                <div class="bid-input-group" style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                  <input type="number" id="bidAmountInput" placeholder="USDC Amount" style="flex: 1;">
+                  <button id="submitBidBtn" class="primary-btn small">Private Bid</button>
+                  <button id="cancelBidBtn" class="secondary-btn small">Cancel</button>
+                </div>
+              </div>
+
+              <div id="auctionsList" class="auction-list-container"></div>
+            </div>
+          </div>
+          <div id="auctionStatus"></div>
+        </section>
+
+        <!-- Stage 5: AML Anti-Scam Filter -->
+        <section id="stage-5" class="stage-content" style="display:none;">
+          <h2>5. Anti-Scam Filter (ACE Compliance)</h2>
+
+          <div style="margin-bottom:1rem; padding:0.75rem;
+            background:rgba(34,211,238,0.05); border:1px solid rgba(34,211,238,0.2);
+            border-radius:8px; font-size:0.85rem;">
+            <strong style="color:#22d3ee;">🛡️ Policy Manager ERC-3643 active.</strong>
+            Each transfer goes through a double AML check within the TEE:
+            local OFAC list + CheckCryptoAddress API (confidentialHttp).
+          </div>
+
+          <div class="wallet-hint" style="margin-bottom:1rem; font-size:0.9rem;
+            background:rgba(15,23,42,0.5); padding:0.5rem 0.75rem; border-radius:4px;">
+            🆔 My Wallet:
+            <code id="currentWalletDisplay" style="color:#22d3ee;">(Connect MetaMask)</code>
+            <span id="walletFreezeStatus" style="margin-left:0.75rem;"></span>
+          </div>
+
+          <div class="two-col" style="gap:1.5rem; align-items:start; display: grid; grid-template-columns: 1fr 1fr;">
+
+            <!-- Transfer Form -->
+            <div class="control-card" style="background:#1e293b; padding:1.5rem; border-radius:8px;">
+              <h3 style="margin-top:0;">💸 Transfer Tokens</h3>
+              <p style="font-size:0.82rem; color:#94a3b8; margin-bottom:1rem;">
+                Transfer your RWA assets or stablecoins with automatic compliance monitoring.
+              </p>
+
+              <div id="amlAlertContainer"></div>
+              <form id="amlForm" class="standard-form">
+                <div class="form-group" style="margin-bottom:1rem;">
+                  <label style="display:block; margin-bottom:0.5rem;">Token to Transfer:</label>
+                  <select id="rwaTokenSelect" required
+                    style="width:100%; padding:0.5rem; background:#0f172a; color:#fff; border:1px solid #334155; border-radius:4px;">
+                    <option value="">Connect your wallet to see your bonds...</option>
+                  </select>
+                  <small id="rwaBalanceHint" style="color:#94a3b8; font-size:0.78rem; margin-top:3px; display:block;">
+                    Select a bond to see available balance
+                  </small>
+                </div>
+                <div class="form-group" style="margin-bottom:1rem;">
+                  <label style="display:block; margin-bottom:0.5rem;">Destination Wallet:</label>
+                  <input type="text" id="targetWallet" placeholder="0x..."
+                    style="width:100%; font-family:monospace; padding:0.5rem; background:#0f172a; color:#fff; border:1px solid #334155; border-radius:4px;"
+                    required>
+                </div>
+                <div class="form-group" style="margin-bottom:1.5rem;">
+                  <label id="amountLabel" style="display:block; margin-bottom:0.5rem;">Amount of Tokens:</label>
+                  <input type="number" id="transferAmount" placeholder="e.g.: 50" min="0.000001" step="any"
+                    style="width:100%; padding:0.5rem; background:#0f172a; color:#fff; border:1px solid #334155; border-radius:4px;"
+                    required>
+                </div>
+                <button type="submit" class="btn primary" id="amlSubmitBtn" style="width:100%">
+                  🔍 Verify and Transfer
+                </button>
+              </form>
+
+              <!-- AML Steps Viewer -->
+              <div id="amlSteps" class="steps-container"
+                style="display:none; margin-top:1.5rem; background:rgba(15,23,42,0.5); padding:1rem; border-radius:6px;">
+                <h4 style="margin-top:0; color:#22d3ee;">AML CRE Verification (TEE)</h4>
+                <ul id="amlStepList"
+                  style="list-style:none; padding:0; margin:0; font-size:0.85rem; display:flex; flex-direction:column; gap:0.5rem;">
+                  <li id="aml-step-1" class="step-item">1. On-chain pre-check: isFrozen (ERC-3643)</li>
+                  <li id="aml-step-2" class="step-item">2. Local OFAC (confidentialHttp → /aml/check)</li>
+                  <li id="aml-step-3" class="step-item">3. CheckCryptoAddress API (confidentialHttp)</li>
+                  <li id="aml-step-4" class="step-item">4. TEE Scoring &amp; Policy Manager Decision</li>
+                  <li id="aml-step-5" class="step-item">5. ERC-3643 Action / MetaMask Transfer</li>
+                </ul>
+              </div>
+
+              <div id="amlResult" class="status-box" style="margin-top:1rem;"></div>
+            </div>
+
+            <!-- Attack/Test Zone -->
+            <div class="control-card" style="background:#1e293b; padding:1.5rem; border-radius:8px;">
+              <h3 style="margin-top:0; color:#f87171;">⚠️ Attack Simulation</h3>
+              <p style="font-size:0.82rem; color:#94a3b8; margin-bottom:1rem;">
+                Simulate your wallet interacting with a sanctioned protocol.
+                Then attempt a transfer to see the TEE's response.
+              </p>
+
+              <div style="padding:1rem; background:rgba(239,68,68,0.08);
+                border:1px dashed #ef4444; border-radius:8px; margin-bottom:1rem;">
+                <button id="contaminateWalletBtn" class="btn btn-danger" style="width:100%;">
+                  💀 Provoke Malicious Interaction
+                </button>
+                <p style="font-size:0.78rem; margin:0.75rem 0 0; color:#f87171;">
+                  Adds your current wallet to the TEE blacklist.<br>
+                  The AML engine will detect the contamination in the next verification.
+                </p>
+              </div>
+
+              <div style="padding:0.75rem; background:rgba(15,23,42,0.5);
+                border-radius:6px; font-size:0.8rem;">
+                <p style="margin:0 0 0.5rem; color:#94a3b8; font-weight:bold;">
+                  Pre-configured OFAC Wallet (riskScore: 100):
+                </p>
+                <code id="ofacWalletHint"
+                  style="color:#f87171; word-break:break-all; display:block; font-size:0.75rem; margin-bottom:0.5rem;">
+                  0xe6a65b3a5147f9660803b9676b79701c704aa6aa
+                </code>
+                <button type="button" class="btn btn-outline"
+                  style="font-size:0.75rem; width:100%; border:1px solid #334155; padding:0.4rem; background:transparent; color:#94a3b8; cursor:pointer;"
+                  onclick="document.getElementById('targetWallet').value='0xe6a65b3a5147f9660803b9676b79701c704aa6aa'">
+                  ← Use this as destination wallet
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Stage 6 -->
+        <section id="stage-6" class="stage-content" style="display:none;">
+          <div class="stage-header">
+            <h2>6. Automated Regulatory Reporting (Risk & Compliance + Privacy)</h2>
+            <p>Art. 42 Organic Law. Transactions > $1,000 generate encrypted On-Chain reports.
+              Only SUNAVAL can decrypt real identities via CRE TEE.</p>
+          </div>
+
+          <!-- PoR Dashboard -->
+          <div class="por-dashboard"
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+            <div class="info-card"
+              style="background: rgba(34, 211, 238, 0.05); border: 1px solid rgba(34, 211, 238, 0.2);">
+              <h3 style="color: #22d3ee; margin-top: 0;">📊 Proof of Reserve (PoR)</h3>
+              <div class="form-group" style="margin-bottom: 0.8rem;">
+                <label style="font-size: 0.8rem; color: #94a3b8;">Select Bond for Audit:</label>
+                <select id="porBondSelect" class="form-control" style="font-size: 0.8rem; padding: 0.3rem;">
+                  <!-- Dynamically populated -->
+                </select>
+              </div>
+              <div id="porIndicator" style="font-size: 1.3rem; font-weight: bold; color: #10b981;">-- AWAITING --
+              </div>
+              <div id="porDetail" style="font-size: 0.8rem; color: #94a3b8;">Select an asset to verify collateral...
+              </div>
+            </div>
+            <div class="info-card"
+              style="background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2);">
+              <h3 style="color: #a78bfa; margin-top: 0;">🔒 Differential Privacy (Chainlink CRE)</h3>
+              <p style="font-size: 0.8rem;">Reports encrypted with AES-256-GCM. Only SUNAVAL's wallet
+                can decrypt real identities through cryptographic signature verified by the TEE.</p>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <button id="regulatorLoginBtn" class="btn btn-secondary btn-sm">🔑 Audit Access (SUNAVAL
+                  Signature)</button>
+                <div id="auditAccessMessage" style="font-size: 0.75rem; min-height: 1rem;"></div>
+              </div>
+              <div id="onChainReportCount"
+                style="margin-top: 0.5rem; font-size: 0.75rem; color: #64748b; font-family: monospace;">
+                ⛓️ On-Chain Reports: loading...
+              </div>
+            </div>
+          </div>
+
+          <h3>📋 Log of Reported Transactions (Threshold > $1,000)</h3>
+          <div class="table-container">
+            <table class="standard-table">
+              <thead>
+                <tr>
+                  <th>Report Hash</th>
+                  <th>Amount</th>
+                  <th>Identity (Encrypted)</th>
+                  <th>Timestamp</th>
+                  <th>On-Chain</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="regulatoryReportsList">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+
+            <div id="reportPayloadSection"
+              style="display:none; margin-top: 2rem; padding: 1rem; background: #0f172a; border-radius: 8px; border: 1px solid #334155;">
+              <h4 style="margin-top:0; color:#22d3ee;">📄 ACE Secure Envelope (AES-256-GCM Encrypted)</h4>
+              <div id="encryptedPayloadView"
+                style="font-family: monospace; font-size: 0.7rem; color: #64748b; word-break: break-all; background: #020617; padding: 1rem; border-radius: 4px; border: 1px solid #1e293b; margin-bottom: 1rem; max-height: 120px; overflow-y: auto;">
+                Select a report to see its encrypted envelope...
+              </div>
+              <div id="decryptedReportView"
+                style="display:none; background: #1e293b; padding: 1rem; border-radius: 4px; border-left: 4px solid #10b981;">
+                <h5 style="color:#10b981; margin-top:0;">✅ Decrypted Data (Regulator Only)</h5>
+                <pre id="decryptedJson" style="font-size: 0.8rem; color: #e2e8f0; margin:0;"></pre>
+              </div>
+            </div>
+
+            <!-- Hidden elements kept for backward compatibility with els mapping -->
+            <div id="generateManualReportBtn" style="display:none;"></div>
+            <div id="signingModal" style="display:none;">
+              <div id="confirmSignAuditBtn"></div>
+              <div id="cancelSignAuditBtn"></div>
+            </div>
+        </section>
+
+        <!-- 💼 My Investment Portfolio -->
+        <section id="portfolio-section" class="portfolio-container stage-content"
+          style="display:none; margin-top: 3rem; border-top: 1px solid #334155; padding-top: 2rem;">
+          <div class="stage-header">
+            <h2>💼 My Investment Portfolio</h2>
+            <div id="kycBadge" class="status-badge" style="background:#475569;">Loading Status...</div>
+          </div>
+
+          <div class="monitor-dashboard"
+            style="margin-bottom: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="metric-card">
+              <span class="label">USDC Balance (Anvil)</span>
+              <span id="balUSDC" class="value">$ 0.00</span>
+            </div>
+            <div class="metric-card">
+              <span class="label">Bolívares Balance (VES)</span>
+              <span id="balVES" class="value">0.00 Bs</span>
+            </div>
+          </div>
+
+          <h3>📂 My RWA Bond Holdings</h3>
+          <div class="table-container">
+            <table class="standard-table">
+              <thead>
+                <tr>
+                  <th>Bond</th>
+                  <th>Quantity</th>
+                  <th>Est. Value (USD)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="holdingsTableBody">
+                <tr>
+                  <td colspan="5" style="text-align:center; color:#94a3b8;">Querying blockchain...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <aside id="logs-panel">
+        <div class="logs-header">
+          <h3>System / CRE Logs</h3>
+          <button id="toggleLogsBtn">◀</button>
+        </div>
+        <div id="logs"></div>
+      </aside>
+    </div> <!-- #content -->
+  </div> <!-- #app -->
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.7.0/dist/ethers.umd.min.js"></script>
+  <script>
+    const API_BASE = 'http://127.0.0.1:3001';
+  </script>
+  <script src="onchain.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

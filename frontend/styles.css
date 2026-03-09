@@ -1,0 +1,1044 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0a101a;
+  color: #e0e6ed;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  height: 100vh;
+}
+
+header {
+  background: #0f172a;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  /* Centramos el contenido principal */
+  align-items: center;
+  position: relative;
+  /* Para el título absoluto */
+  border-bottom: 1px solid #1e293b;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+  position: absolute;
+  left: 2rem;
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #22d3ee;
+  letter-spacing: -0.02em;
+}
+
+.wallet-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+#connectWalletBtn {
+  min-width: 150px;
+  transition: all 0.2s ease;
+}
+
+#connectWalletBtn.primary-btn:hover {
+  background: #06b6d4;
+  transform: translateY(-1px);
+}
+
+#connectWalletBtn.secondary-btn {
+  background: rgba(30, 64, 175, 0.1);
+  /* Indigo/Blue traslucido */
+  color: #60a5fa;
+  border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
+#connectWalletBtn.secondary-btn:hover {
+  background: rgba(30, 64, 175, 0.2);
+}
+
+#simulateWalletBtn {
+  background: #6366f1;
+}
+
+.account-toggle {
+  display: flex;
+  background: #1e293b;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #334155;
+}
+
+.acct-btn {
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.acct-btn.active {
+  background: #3b82f633;
+  color: #22d3ee;
+  box-shadow: inset 0 0 10px #3b82f633;
+}
+
+.acct-btn:hover:not(.active) {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+nav {
+  background: #1e293b;
+  display: flex;
+  overflow-x: auto;
+}
+
+.stage-btn {
+  flex: 1;
+  min-width: 160px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  padding: 0.8rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.stage-btn.active {
+  color: #22d3ee;
+  border-bottom-color: #22d3ee;
+}
+
+.entity-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.entity-buttons button {
+  padding: 1.5rem;
+  font-size: 1rem;
+  background: #1e293b;
+  color: #22d3ee;
+  border: 2px solid #334155;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.entity-buttons button:hover {
+  background: #334155;
+}
+
+.back-btn {
+  background: #334155;
+  color: #94a3b8;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.back-btn:hover {
+  background: #475569;
+}
+
+#content {
+  display: flex;
+  overflow: hidden;
+}
+
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.stage-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: #22d3ee;
+  margin-top: 0;
+}
+
+/* Entity Type Badge */
+.entity-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.entity-badge.person {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.entity-badge.company {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  border: 1px solid #3b82f6;
+}
+
+.entity-badge.agent {
+  background: rgba(251, 146, 60, 0.15);
+  color: #fb923c;
+  border: 1px solid #fb923c;
+}
+
+form {
+  background: #1e293b;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+input,
+select {
+  padding: 0.5rem;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  background: #0f172a;
+  color: #e0e6ed;
+}
+
+button[type="submit"] {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+#logs-panel {
+  width: 400px;
+  background: #0b1016;
+  border-left: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+}
+
+#logs-panel.collapsed {
+  width: 60px;
+}
+
+.logs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid #1e293b;
+}
+
+.logs-header h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+#logs-panel.collapsed .logs-header h3 {
+  display: none;
+}
+
+#toggleLogsBtn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+#logs-panel.collapsed #logs {
+  display: none;
+}
+
+#logs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  white-space: pre-wrap;
+}
+
+#logs div {
+  margin-bottom: 2px;
+}
+
+/* Categorías de Logs con Specificity Boost para Hackathon */
+#logs div.log-sistema {
+  color: #94a3b8 !important;
+  /* Gris suave para sistema */
+}
+
+#logs div.log-cliente {
+  color: #fb923c !important;
+}
+
+/* Naranja */
+#logs div.log-cre {
+  color: #a855f7 !important;
+}
+
+/* Púrpura */
+#logs div.log-seniat {
+  color: #facc15 !important;
+}
+
+/* Amarillo */
+#logs div.log-gemini {
+  color: #f472b6 !important;
+}
+
+/* Rosa */
+#logs div.log-aml {
+  color: #2dd4bf !important;
+}
+
+/* Cyan */
+#logs div.log-ace {
+  color: #84cc16 !important;
+}
+
+/* Verde Lima */
+#logs div.log-kyc {
+  color: #10b981 !important;
+}
+
+/* Esmeralda */
+#logs div.log-error,
+#logs div.log-error-mock,
+#logs div.error {
+  color: #f87171 !important;
+}
+
+/* Stage 2 categories */
+#logs div.log-teoria {
+  color: #a855f7 !important;
+}
+
+#logs div.log-evm {
+  color: #facc15 !important;
+}
+
+#logs div.log-ccip {
+  color: #84cc16 !important;
+}
+
+#logs div.log-por {
+  color: #2dd4bf !important;
+}
+
+#logs div.log-success,
+#logs div.success {
+  color: #10b981 !important;
+}
+
+#walletAddress {
+  font-family: monospace;
+  color: #94a3b8;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1e293b;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #334155;
+}
+
+th {
+  color: #94a3b8;
+}
+
+/* KYC Progress Steps */
+.steps-container {
+  background: #1e293b;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  border-left: 4px solid #334155;
+}
+
+.steps-container h4 {
+  margin-top: 0;
+  color: #22d3ee;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.5rem;
+}
+
+.steps-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.steps-container li {
+  padding: 0.5rem 0;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+}
+
+.steps-container li::before {
+  content: '○';
+  margin-right: 0.8rem;
+  font-weight: bold;
+}
+
+.steps-container li.active {
+  color: #22d3ee;
+  font-weight: bold;
+}
+
+.steps-container li.active::before {
+  content: '●';
+}
+
+.steps-container li.completed {
+  color: #10b981;
+}
+
+.steps-container li.completed::before {
+  content: '✓';
+}
+
+.steps-container li.error {
+  color: #f87171;
+}
+
+.steps-container li.error::before {
+  content: '×';
+}
+
+/* Stage 3 - Monitor Dashboard */
+.monitor-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.metric-card:hover {
+  border-color: #3b82f6;
+}
+
+.metric-card .label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.metric-card .value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f8fafc;
+}
+
+.indicator-bar {
+  width: 100%;
+  height: 8px;
+  background: #1e293b;
+  border-radius: 4px;
+  margin-top: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.indicator-bar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--ratio, 0%);
+  background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981);
+  transition: width 1s ease-in-out;
+}
+
+.status-badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.status-badge.active {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.status-badge.paused {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+.ai-console {
+  background: #020617;
+  border: 1px solid #3b82f633;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+
+.ai-console-header {
+  background: #1e293b;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ai-thinking-log {
+  padding: 0.8rem;
+  height: 120px;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.ai-line {
+  border-left: 2px solid #3b82f6;
+  padding-left: 0.6rem;
+  margin-bottom: 0.4rem;
+  animation: fadeIn 0.3s forwards;
+}
+
+.investment-card,
+.control-card {
+  background: rgba(30, 41, 59, 0.4);
+  padding: 1.2rem;
+  border-radius: 12px;
+  border: 1px solid #334155;
+}
+
+.conversion-preview {
+  background: #0f172a;
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin: 0.8rem 0;
+  font-size: 0.85rem;
+  text-align: center;
+  border: 1px dashed #334155;
+}
+
+.buy-btn {
+  width: 100%;
+  padding: 0.7rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Stage 4 - Mercado de Transacciones Privadas (Sovereign Edition) */
+.private-marketplace-hero {
+  background: url('private_marketplace_banner_1772500745921.png') no-repeat center/cover;
+  height: 200px;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.private-marketplace-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(0deg, rgba(10, 16, 26, 0.9) 0%, rgba(10, 16, 26, 0.2) 100%);
+}
+
+.hero-text {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-text h3 {
+  margin: 0;
+  color: #22d3ee;
+  font-size: 1.6rem;
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.8);
+}
+
+.private-vault-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.private-card {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.shield-zone {
+  border: 2px dashed rgba(34, 211, 238, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  background: rgba(15, 23, 42, 0.3);
+}
+
+.shield-zone:hover {
+  border-color: #22d3ee;
+  background: rgba(34, 211, 238, 0.1);
+  transform: scale(1.02);
+}
+
+.shield-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+  filter: drop-shadow(0 0 10px #22d3ee);
+}
+
+.private-balance-badge {
+  background: rgba(168, 85, 247, 0.2);
+  color: #a855f7;
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  letter-spacing: 0.05em;
+}
+
+.ticket-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.withdrawal-ticket {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(15, 23, 42, 0.9));
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.ticket-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ticket-amount {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+  font-family: monospace;
+}
+
+.ticket-token {
+  font-size: 0.85rem;
+  color: #a855f7;
+  font-weight: bold;
+}
+
+.claim-btn {
+  background: #a855f7;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.claim-btn:hover {
+  background: #9333ea;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+}
+
+.x402-panel {
+  background: rgba(250, 204, 21, 0.05);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.x402-loading {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(250, 204, 21, 0.1);
+  border-top-color: #facc15;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.log-market {
+  color: #fca5a5 !important;
+}
+
+.unshield-container {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Etapa 4 - Mercado Refinado */
+.auction-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.auction-card {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #334155;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.auction-card:hover {
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+}
+
+.auction-card.settled {
+  border-color: #10b98166;
+  opacity: 0.9;
+}
+
+.auction-card.collapsed {
+  padding: 0.8rem 1.2rem;
+  gap: 0;
+}
+
+.auction-card.collapsed .auction-bids,
+.auction-card.collapsed .auction-actions {
+  display: none !important;
+}
+
+.auction-card.collapsed .auction-info br,
+.auction-card.collapsed .auction-info small {
+  display: none;
+}
+
+.auction-card.collapsed .auction-info strong {
+  font-size: 1rem;
+}
+
+.expand-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(148, 163, 184, 0.1);
+  border: none;
+  color: #94a3b8;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.expand-toggle:hover {
+  background: rgba(34, 211, 238, 0.2);
+  color: #22d3ee;
+}
+
+.auction-card.collapsed .expand-toggle {
+  top: 0.5rem;
+}
+
+.price {
+  color: #facc15;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.auction-bids {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.auction-bids ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.4rem 0 0;
+}
+
+.auction-bids li {
+  display: flex;
+  justify-content: space-between;
+  color: #94a3b8;
+}
+
+.auction-bids li span {
+  color: #e0e6ed;
+}
+
+.winner-badge {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px dashed #10b981;
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+  color: #10b981;
+  font-weight: bold;
+}
+
+.auction-actions {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: space-between;
+}
+
+.small-btn {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.small-btn:hover {
+  opacity: 0.8;
+}
+
+.ai-btn {
+  background: #334155;
+  color: #3b82f6;
+}
+
+.bid-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.settle-btn {
+  background: #facc15;
+  color: #0f172a;
+  font-weight: bold;
+}
+
+.x402-notice {
+  background: rgba(24acc15, 0.1);
+  border: 1px solid #facc15;
+  padding: 0.8rem;
+  border-radius: 8px;
+  color: #facc15;
+  font-size: 0.85rem;
+}
+
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  background: #334155;
+  color: #94a3b8;
+}
+
+.badge.success {
+  background: #10b98133;
+  color: #10b981;
+}
+
+.primary-btn {
+  background: #2563eb;
+  /* Azul Real */
+  color: #ffffff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.primary-btn.small {
+  width: auto;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+}
+
+.secondary-btn.small {
+  width: auto;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  background: #334155;
+  color: #94a3b8;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Portfolio Custom Styling */
+.standard-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #334155;
+  margin-top: 1rem;
+}
+
+.standard-table th {
+  background: rgba(15, 23, 42, 0.8);
+  color: #94a3b8;
+  padding: 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.standard-table td {
+  padding: 1rem;
+  border-top: 1px solid #334155;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+}
+
+.standard-table tr:hover td {
+  background: rgba(59, 130, 246, 0.05);
+}
+
+#balUSDC {
+  color: #10b981 !important;
+}
+
+#balVES {
+  color: #3b82f6 !important;
+}
+
+#portfolio-section {
+  max-width: 800px !important;
+  margin: 0 auto;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
