@@ -125,16 +125,27 @@ Open 4 terminals and run the following:
 **Terminal 1: Blockchain (Anvil)**
 ```powershell
 cd codigo/blockchain
-anvil --state ../anvil-state.json
+anvil 
 ```
 
 **Terminal 2: Smart Contract Setup**
 ```powershell
 cd codigo/blockchain
-# Deploy ACE Infrastructure, Bond Factory, and Market Escrows
-forge script script/Deploy.s.sol:DeployStage1 --rpc-url http://127.0.0.1:8545 --broadcast
-forge script script/DeployStealthBond.s.sol:DeployStealthBond --rpc-url http://127.0.0.1:8545 --broadcast --via-ir
-forge script script/DeployStage4.s.sol:DeployStage4 --rpc-url http://127.0.0.1:8545 --broadcast --via-ir
+# 1. Identity Infrastructure CCID (Fase 1: ACE & Identity)
+	forge script script/Deploy.s.sol:DeployStage1 --rpc-url http://127.0.0.1:8545 --broadcast --private-key Foundry_private_Key
+
+# 2. Liquidity Distribution and RWA Tokens (Demo Liquidity)
+	forge script script/SeedWallets.s.sol:SeedWallets --rpc-url http://127.0.0.1:8545 --broadcast --private-key Foundry_private_Key
+
+# 3. Stealth Bond Factory (Phase 2: ERC-3643 Clones)
+	forge script script/DeployStealthBond.s.sol:DeployStealthBond --rpc-url http://127.0.0.1:8545 --broadcast --private-key Foundry_private_Key --via-ir
+
+# 4. Private Transactions Vault (Phase 4: Blind Bidding & x402)
+	forge script script/DeployStage4.s.sol:DeployStage4 --rpc-url http://127.0.0.1:8545 --broadcast --private-key Foundry_private_Key --via-ir
+
+# 5. Regulatory Report Ledger (Phase 6: SUNAVAL Audit)
+	forge script script/DeployStage6.s.sol:DeployStage6 --rpc-url http://127.0.0.1:8545 --broadcast --private-key Foundry_private_Key --via-ir
+
 ```
 
 **Terminal 3: Core Engine (Backend)**
