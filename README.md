@@ -153,7 +153,7 @@ npx serve -l 3000
 
 ## 🏗️ Deep Dive Architecture
 For a granular breakdown of our TEE sequence diagrams and CCID derivation logic:
-👉 **[Read the TECHNICAL_SPEC.md]([codigo/TECHNICAL_SPEC.md](https://github.com/Themvp07/StealthBondLATAM/blob/main/TECHNICAL_SPEC.md))**
+👉 **[Read the TECHNICAL_SPEC.md](TECHNICAL_SPEC.md)**
 
 ---
 
