@@ -1,0 +1,17 @@
+# General Workflow Info
+name: "stage2-issuance"
+type: "typescript"
+
+# Target specific settings for simulation
+simulation:
+  user-workflow:
+    workflow-name: "stage2-issuance"
+  workflow-artifacts:
+    workflow-path: "./index.ts"
+    config-path: "./config.json"
+    secrets-path: "../../secrets.yaml"
+
+# Capability requirements (General)
+capabilities:
+  - "evmWrite"
+  - "http"

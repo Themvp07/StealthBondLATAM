@@ -1,0 +1,7 @@
+{
+    "apiBase": "http://127.0.0.1:3001",
+    "factoryAddress": "0x4ed7c70f96b99c776995fb64377f0d4ab3b0e1c1",
+    "vaultNamespace": "stealthbond",
+    "vaultOwner": "admin",
+    "chainSelectorName": "ethereum-testnet-sepolia"
+}

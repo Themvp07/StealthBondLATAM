@@ -1,0 +1,63 @@
+{
+  "bonds": [
+    {
+      "bondId": 1,
+      "address": "0x86699f95700424A20eDf530041f3869480604aC9",
+      "name": "Bono1",
+      "ticker": "BONO1",
+      "collateralId": "Bono1",
+      "nominalValue": 5000,
+      "collateralValue": 7500,
+      "owner": "0xa66854b2df0dd19b96af382336721b61f222ddff",
+      "status": "ACTIVE",
+      "chain": "Sepolia",
+      "vaultHash": "0x626f6e645f5365706f6c69615f426f6e6f315f696e73696768745f5374616e64",
+      "txHash": "0xebf37f4b202cb43f3457f4a30bd77e8bcc9f827a775d2c9920d21d0033d69db7"
+    }
+  ],
+  "auctions": [
+    {
+      "id": "auc_78e3",
+      "bondId": "0x86699f95700424A20eDf530041f3869480604aC9",
+      "seller": "0xa66854b2df0dd19b96af382336721b61f222ddff",
+      "amount": 100,
+      "minBid": 1500,
+      "status": "ACTIVE",
+      "createdAt": "2026-03-08T19:10:07.591Z",
+      "bids": []
+    }
+  ],
+  "reports": [],
+  "kyc": {
+    "0xa66854b2df0dd19b96af382336721b61f222ddff": {
+      "status": "verified",
+      "type": "company",
+      "lei": "529900CTAZ8H43TORT64",
+      "wallet": "0xa66854b2df0dd19b96af382336721b61f222ddff",
+      "rif": "J-00034354-3",
+      "name": "SIEMENS ENERGY S.A.",
+      "gleifStatus": "ISSUED",
+      "corroboration": "PARTIALLY_CORROBORATED",
+      "credentialHash": "0x636369645f636f6d70616e795f30786136363835346232646630646431396239",
+      "riskScore": 0,
+      "verifiedAt": "2026-03-08T19:02:35.516Z",
+      "txHash": "0x28e28f20a99b9ff0e3aa56d4dfe8822f2036afe617fef8231d6a4618027b9076"
+    }
+  },
+  "agents": {},
+  "bankReserves": {},
+  "balances": {
+    "0xa66854b2df0dd19b96af382336721b61f222ddff": {
+      "0x86699f95700424A20eDf530041f3869480604aC9": 4900
+    }
+  },
+  "privateBalances": {},
+  "frozenBids": {},
+  "privateAuctions": {},
+  "withdrawalTickets": {},
+  "aml": {
+    "blacklist": [
+      "0x2f214de1ad31e4934999224784880726f994089f"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+# ============================================================
+# Workflow Configuration – Stage 6 Reports
+# ============================================================
+name: "stage6-reports"
+type: "typescript"
+network: "ethereum-sepolia"
+
+capabilities:
+  - "http"

@@ -1,0 +1,9 @@
+# Workflow Configuration for Stage 1 Company (LEI/GLEIF)
+name: "stage1-company"
+type: "typescript"
+network: "ethereum-sepolia"
+
+# Capability requirements
+capabilities:
+  - "evmWrite"
+  - "http"

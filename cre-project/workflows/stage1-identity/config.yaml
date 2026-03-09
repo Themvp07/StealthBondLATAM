@@ -1,0 +1,9 @@
+# Workflow Configuration for Stage 1 Identity
+name: "stage1-identity"
+type: "typescript"
+network: "ethereum-sepolia"
+
+# Capability requirements
+capabilities:
+  - "evmWrite"
+  - "http"

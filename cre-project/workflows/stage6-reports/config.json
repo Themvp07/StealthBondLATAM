@@ -1,0 +1,6 @@
+{
+    "apiBase": "http://127.0.0.1:3001",
+    "regulatorWallet": "0xa66854b2df0dd19b96af382336721b61f222ddff",
+    "vaultNamespace": "stealthbond",
+    "vaultOwner": "admin"
+}

@@ -1,0 +1,18 @@
+# General Workflow Info
+name: "stage1-agent"
+type: "typescript"
+
+# Target specific settings for simulation
+simulation:
+  user-workflow:
+    workflow-name: "stage1-agent"
+  workflow-artifacts:
+    workflow-path: "./index.ts"
+    config-path: "./config.json"
+    secrets-path: "../../secrets.yaml"
+
+# Capability requirements (General)
+capabilities:
+  - "evmRead"
+  - "evmWrite"
+  - "http"

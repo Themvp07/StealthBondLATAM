@@ -1,0 +1,11 @@
+{
+    "apiBase": "http://127.0.0.1:3001",
+    "complianceIssuer": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+    "chainSelectorName": "ethereum-testnet-sepolia",
+    "vaultNamespace": "stealthbond",
+    "vaultOwner": "admin",
+    "aml": {
+        "freezeThreshold": 70,
+        "ofacWallet": "0xe6a65b3a5147f9660803b9676b79701c704aa6aa"
+    }
+}

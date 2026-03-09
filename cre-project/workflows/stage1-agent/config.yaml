@@ -1,0 +1,10 @@
+# Workflow Configuration for Stage 1 Agent
+name: "stage1-agent"
+type: "typescript"
+network: "ethereum-sepolia"
+
+# Capability requirements
+capabilities:
+  - "evmRead"
+  - "evmWrite"
+  - "http"

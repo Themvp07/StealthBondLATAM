@@ -1,0 +1,31 @@
+# ============================================================
+# Stage 5 – AML Anti-Scam Workflow (StealthBond LATAM)
+# ============================================================
+# Trigger: HTTP (llamado por el Core Engine cuando el usuario
+#          solicita una transferencia de tokens RWA ERC-3643)
+#
+# Capabilities:
+#   - http      → ConfidentialHTTPClient (OFAC local + CheckCryptoAddress)
+#   - evmWrite  → setAddressFrozen() en StealthBondERC3643 si score >= 70
+#
+# Flujo:
+#   1. ConfidentialHTTP → /aml/check (lista OFAC local, key inyectada desde Vault)
+#   2. ConfidentialHTTP → checkcryptoaddress.com (API externa, key del Vault)
+#   3. Score combinado MAX(local, external)
+#   4. Si score >= 70 → evmWrite setAddressFrozen(wallet, true)
+#   5. Retorna JSON con riskScore, action y txHash del freeze
+# ============================================================
+name: "stage5-aml"
+type: "typescript"
+
+simulation:
+  user-workflow:
+    workflow-name: "stage5-aml"
+  workflow-artifacts:
+    workflow-path: "./index.ts"
+    config-path: "./config.json"
+    secrets-path: "../../secrets.yaml"
+
+capabilities:
+  - "evmWrite"
+  - "http"

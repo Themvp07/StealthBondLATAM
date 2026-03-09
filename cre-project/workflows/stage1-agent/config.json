@@ -1,0 +1,8 @@
+{
+    "apiBase": "http://127.0.0.1:3001",
+    "agentRegistry": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+    "keystoneForwarder": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+    "chainSelectorName": "ethereum-testnet-sepolia",
+    "vaultNamespace": "stealthbond",
+    "vaultOwner": "admin"
+}

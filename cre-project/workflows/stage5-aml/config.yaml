@@ -1,0 +1,11 @@
+# ============================================================
+# Workflow Configuration – Stage 5 AML
+# Sigue el mismo patrón que stage1-identity/config.yaml
+# ============================================================
+name: "stage5-aml"
+type: "typescript"
+network: "ethereum-sepolia"
+
+capabilities:
+  - "evmWrite"
+  - "http"

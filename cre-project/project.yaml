@@ -1,0 +1,20 @@
+project_name: "StealthBond-LATAM"
+version: "1.0.0"
+
+# Target para la simulación
+simulation:
+  cre-cli:
+    don-family: "zone-a"
+  rpcs:
+    - chain-name: "ethereum-testnet-sepolia"
+      chain-id: 31337
+      url: "http://127.0.0.1:8545"
+
+# Target explícito etapa1
+stage1:
+  cre-cli:
+    don-family: "zone-a"
+  rpcs:
+    - chain-name: "ethereum-testnet-sepolia"
+      chain-id: 31337
+      url: "http://127.0.0.1:8545"
