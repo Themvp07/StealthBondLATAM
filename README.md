@@ -5,6 +5,8 @@
 
 From fractionalized commercial papers to AI-driven automated guardrails, StealthBond provides the infrastructure for a secure, compliant, and liquid on-chain debt market.
 
+-DEMO video: https://drive.google.com/drive/folders/1u9i7qsPBpZMkXM8VehMD058ZFPpYkMWV?usp=sharing
+
 ---
 
 ## 🏆 Hackathon Tracks & Impact
@@ -74,7 +76,6 @@ In an institutional market, **Algorithmic Compliance** is the only way to ensure
 - 📂 **`codigo/blockchain`**: The "Anchor" — Keystone-native smart contracts (Solidity/Foundry).
 - 📂 **`codigo/core-engine`**: The "Sync" — Node.js orchestrator bridging UI and CRE.
 - 📂 **`codigo/frontend`**: The "Face" — Premium Glassmorphism Dashboard for Investors & Regulators.
-- 📂 **`Documentacion/`**: Detailed research papers on GLEIF, x402, and ACE architecture.
 
 ---
 
@@ -152,7 +153,7 @@ npx serve -l 3000
 
 ## 🏗️ Deep Dive Architecture
 For a granular breakdown of our TEE sequence diagrams and CCID derivation logic:
-👉 **[Read the TECHNICAL_SPEC.md](codigo/TECHNICAL_SPEC.md)**
+👉 **[Read the TECHNICAL_SPEC.md]([codigo/TECHNICAL_SPEC.md](https://github.com/Themvp07/StealthBondLATAM/blob/main/TECHNICAL_SPEC.md))**
 
 ---
 
